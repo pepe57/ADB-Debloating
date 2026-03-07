@@ -7,7 +7,25 @@
 
 [![Telegram][telegram-news-badge]][telegram-news] [![Telegram][telegram-group-badge]][telegram-group]
 
-[![ko-fi](https://www.ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/Q5Q51QUJC)
+## How-to
+
+* Enable USB debugging in developer settings page
+* Connect your phone to PC via USB cable
+* Download [latest](https://github.com/farag2/ADB-Debloating/releases/latest) release
+* Open PowerShell as admin and run `Set-ExecutionPolicy -ExecutionPolicy Bypass -Force`
+* Change location to folder
+* Right-click on `Download_ADB.ps1` to download the latest ADB
+* Run `Function.ps1` to choose which application to remove
+
+## Links
+
+* [Google USB Driver](https://developer.android.com/studio/run/win-usb)
+  * [Official all OEMs drivers](https://developer.android.com/studio/run/oem-usb#Drivers)
+* [Download ADB](https://developer.android.com/studio/releases/platform-tools)
+* [App Inspector](https://play.google.com/store/apps/details?id=com.jgba.appinspector)
+* [ADB AppControl](https://4pda.to/forum/index.php?showtopic=993643)
+
+# Addendum
 
 ## Get apps packages list
 
@@ -27,36 +45,3 @@ adb shell ls /data
 adb pull /storage/3039-3538/dcim/camera D:\folder
 adb pull sdcard/DCIM/Camera D:\folder
 ```
-
-## Screenshot
-
-![image](https://user-images.githubusercontent.com/10544660/233859224-6bb2e199-3833-4238-a670-aa98960e3801.png)
-
-## How-to
-
-* Connect phone to PC via USB cable;
-* Enable USB debugging in your phone OS;
-* Download and expand latest release archive;
-* Open PowerShell as admin and run `Set-ExecutionPolicy -ExecutionPolicy Bypass -Force`
-* Close Powershell run as admin;
-* Download ADB via `Download_ADB.ps1`;
-* Run `Function.ps1`.
-
-## Links
-
-* [Google USB Driver](https://developer.android.com/studio/run/win-usb)
-  * [Official all OEMs drivers](https://developer.android.com/studio/run/oem-usb#Drivers)
-* [Download ADB](https://developer.android.com/studio/releases/platform-tools)
-* [App Inspector](https://play.google.com/store/apps/details?id=com.jgba.appinspector)
-* [ADB AppControl](https://4pda.to/forum/index.php?showtopic=993643)
-* [ReVanced](https://github.com/revanced)
-* [My ReVanced Builder](https://github.com/farag2/ReVanced_Builder)
-
-## Ask a question on
-
-* MIUI
-  * [Mi 11T Pro](https://4pda.to/forum/index.php?showtopic=1032499&st=2320#entry112088380)
-  * [Mi 10T](https://4pda.to/forum/index.php?s=&showtopic=1005145&view=findpost&p=100967182)
-  * [Mi 9T](https://4pda.to/forum/index.php?s=&showtopic=955101&view=findpost&p=93561572)
-* One UI
-  * [Galaxy S20](https://4pda.to/forum/index.php?s=&showtopic=953111&view=findpost&p=97533733)
