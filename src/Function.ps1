@@ -41,7 +41,7 @@ catch [System.Management.Automation.RuntimeException]
 
 <#
 	.SYNOPSIS
-	The "Show menu" function with the up/down arrow keys and enter key to make a selection
+	"Show menu" function with the up/down arrow keys and enter key to make a selection
 
 	.PARAMETER Menu
 	Array of items to choose from
@@ -49,14 +49,12 @@ catch [System.Management.Automation.RuntimeException]
 	.PARAMETER Default
 	Default selected item in array
 
-	.PARAMETER AddSkip
-	Add localized extracted "Skip" string from shell32.dll
-
 	.EXAMPLE
-	Show-Menu -Menu $Items -Default 1
+	Show-Menu -Menu @($Item1, $Item2) -Default 1
 
 	.LINK
 	https://qna.habr.com/answer?answer_id=1522379
+	https://github.com/ryandunton/InteractivePSMenu
 #>
 function Show-Menu
 {
@@ -69,65 +67,66 @@ function Show-Menu
 
 		[Parameter(Mandatory = $true)]
 		[int]
-		$Default
+		$Default,
+
+		[Parameter(Mandatory = $false)]
+		[switch]
+		$AddSkip
 	)
 
-	# https://github.com/microsoft/terminal/issues/14992
-	[System.Console]::BufferHeight += $Menu.Count
-	$minY = [Console]::CursorTop
-	$y = [Math]::Max([Math]::Min($Default, $Menu.Count), 0)
+	Write-Information -MessageData "" -InformationAction Continue
+
+	$i = 0
+	while ($i -lt $Menu.Count)
+	{
+		$i++
+		Write-Host -Object ""
+	}
+
+	$SelectedValueIndex = [Math]::Max([Math]::Min($Default, $Menu.Count), 0)
 
 	do
 	{
-		[Console]::CursorTop = $minY
-		[Console]::CursorLeft = 0
-		$i = 0
+		[Console]::SetCursorPosition(0, [Console]::CursorTop - $Menu.Count)
 
-		foreach ($item in $Menu)
+		for ($i = 0; $i -lt $Menu.Count; $i++)
 		{
-			if ($i -ne $y)
+			if ($i -eq $SelectedValueIndex)
 			{
-				Write-Information -MessageData ('  {1}  ' -f ($i+1), $item) -InformationAction Continue
+				Write-Host -Object "[>] $($Menu[$i])" -NoNewline
 			}
 			else
 			{
-				Write-Information -MessageData ('[ {1} ]' -f ($i+1), $item) -InformationAction Continue
+				Write-Host -Object "[ ] $($Menu[$i])" -NoNewline
 			}
 
-			$i++
+			Write-Host -Object ""
 		}
 
-		$k = [Console]::ReadKey()
-
-		switch ($k.Key)
+		$Key = [Console]::ReadKey()
+		switch ($Key.Key)
 		{
 			"UpArrow"
 			{
-				if ($y -gt 0)
-				{
-					$y--
-				}
+				$SelectedValueIndex = [Math]::Max(0, $SelectedValueIndex - 1)
 			}
 			"DownArrow"
 			{
-				if ($y -lt ($Menu.Count - 1))
-				{
-					$y++
-				}
+				$SelectedValueIndex = [Math]::Min($Menu.Count - 1, $SelectedValueIndex + 1)
 			}
 			"Enter"
 			{
-				return $Menu[$y]
+				return $Menu[$SelectedValueIndex]
 			}
 		}
 	}
-	while ($k.Key -notin ([ConsoleKey]::Escape, [ConsoleKey]::Enter))
+	while ($Key.Key -notin ([ConsoleKey]::Escape, [ConsoleKey]::Enter))
 }
 
-Write-Information -MessageData "" -InformationAction Continue
 $File = Show-Menu -Menu @("Samsung", "Xiaomi", "Google") -Default 1
 Write-Information -MessageData "" -InformationAction Continue
 Write-Verbose -Message "Please wait..." -Verbose
+Write-Information -MessageData "" -InformationAction Continue
 
 $PackagesList = Get-Content -Path "$PSScriptRoot\JSON\$File.json" | ConvertFrom-Json
 # Check if disabled packages exist, unless we cannot check if replace() method exists for them
