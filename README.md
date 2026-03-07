@@ -14,10 +14,9 @@ https://github.com/user-attachments/assets/2bc5e9d9-df37-4dba-8311-3c57ae42751b
 * Enable USB debugging in developer settings page
 * Connect your phone to PC via USB cable
 * Download [latest](https://github.com/farag2/ADB-Debloating/releases/latest) release
-* Open PowerShell as admin and run `Set-ExecutionPolicy -ExecutionPolicy Bypass -Force`
-* Change location to folder
-* Right-click on `Download_ADB.ps1` to download the latest ADB
-* Run `Function.ps1` to choose which application to remove
+* Open PowerShell `as admin` and run `Set-ExecutionPolicy -ExecutionPolicy Bypass -Force`
+* Right-click on `Download_ADB.ps1` to download the latest ADB provided
+* Right-click on `Function.ps1` to choose which application to remove
 
 ## Links
 
