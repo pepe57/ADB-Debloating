@@ -1,4 +1,4 @@
-﻿[
+[
     {
         "Name":  "Aliexpress",
         "Package":  "com.alibaba.aliexpresshd"
@@ -673,7 +673,7 @@
     },
     {
         "Name":  "Yandex",
-        "Package":  "ru.yandex.searchplugin"
+        "Package":  "com.yandex.searchapp"
     },
     {
         "Name":  "Yandex Browser",
