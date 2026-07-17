@@ -29,9 +29,9 @@ if ($PSVersionTable.PSVersion.Major -eq 5)
 }
 
 # Sort  by app's name
-$ = Get-Content -Path "$PSScriptRoot\Apps." -Raw -Encoding UTF8 | ConvertFrom-
-$ = $ | Sort-Object -Property Name -Unique
-($ | ConvertTo- -Depth 5).Replace("\u0026", "&") | Set-Content -Path "$PSScriptRoot\Apps." -Encoding UTF8 -Force
+$JSON = Get-Content -Path "$PSScriptRoot\Apps.json" -Raw -Encoding UTF8 | ConvertFrom-Json
+$JSON = $JSON | Sort-Object -Property Name -Unique
+($JSON | ConvertTo-JSON -Depth 5).Replace("\u0026", "&") | Set-Content -Path "$PSScriptRoot\Apps.json" -Encoding UTF8 -Force
 
 Write-Warning -Message "Waiting your phone to be connected and allowed USB debugging"
 & $PSScriptRoot\platform-tools\adb.exe wait-for-device
@@ -50,6 +50,9 @@ catch [System.Management.Automation.RuntimeException]
 	pause
 	exit
 }
+
+Write-Warning -Message "Please wait...
+"
 
 $PackagesList = Get-Content -Path "$PSScriptRoot\Apps.json" | ConvertFrom-Json
 # Check if disabled packages exist, unless we cannot check if replace() method exists for them
